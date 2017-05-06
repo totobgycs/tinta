@@ -21,7 +21,7 @@ install dependencies into the env
 
     pip install -r requirements.txt
 
-create a dev sqllite database
+set up database schema into a dev sql-lite file
 
     python manage.py migrate
 
