@@ -1,5 +1,10 @@
+# Tinta
+This project is for...
+
 # Setup
 Pre-requisites: git, python3, rabbitmq installed system-wide
+
+Steps:
 
 clone the project (will create a directory)
 
