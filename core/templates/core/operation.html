@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinta Projekt</title>
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Google Font Lato -->
+    <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+
+    <!-- Material Design icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <!-- Colors -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.teal-indigo.min.css">
+    
+  </head>
+
+  <!-- Wide card -->
+  <style>
+  .demo-card-wide.mdl-card {
+    width: 100%;
+  }
+
+  </style>
+
+  <!-- Square card -->
+  <style>
+  .demo-card-square.mdl-card {
+    width: 240px;
+    height: 240px;
+    background:
+      url('https://bluebutterfliesandme.files.wordpress.com/2012/06/090514083921-large.jpg') top left 15% no-repeat #46B6AC;
+    margin: 10px;
+    float: left;
+  }
+  }
+  </style>
+
+  <body class="mdl-demo">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Tinta</span>
+	  <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+              <a class="mdl-navigation__link" href="/">Dashboard</a>
+              <a class="mdl-navigation__link" href="/admin">Admin</a>
+            </nav>
+        </div>
+      </header>
+
+      <main class="mdl-layout__content">
+        <div class="page-content">
+	  <div class="mdl-grid">
+	    <div class="mdl-cell mdl-cell--12-col">
+	      <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title">
+                  Operation: {{ operation.name }}
+                </div>
+                <div class="mdl-card__supporting-text">
+                </div>
+              </div>
+            </div>
+
+
+	  </div>
+
+	</div>
+     </main>
+    </div>
+  </body>
+</html>
