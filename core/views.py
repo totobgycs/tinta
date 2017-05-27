@@ -9,9 +9,7 @@ from yahoo_finance import Share
 
 def index(request):
     template = loader.get_template('core/dashboard.html')
-    operations = [
-        {'name': op.name, 'details': 'blah'} for op in Operation.objects.all()
-    ]
+    # the market
     symbols = [
       'GOOG',
       'AAPL',
@@ -26,8 +24,15 @@ def index(request):
       'GBPEUR=X',
       'EURUSD=X',
     ]
+    # TODO: this is temporary
+    symbols = []
     shares = [Share(sb) for sb in symbols]
     prices = [{'symbol': s.symbol, 'current_value': s.get_price()} for s in shares]
+
+    # our portfolio
+    operations = [
+        (op, round(op.value - op.invested, 2) if (op.value is not None and op.invested is not None) else None) for op in Operation.objects.all()
+    ]
 
     context = {'operations': operations, 'shares': prices}
     return HttpResponse(template.render(context, request))

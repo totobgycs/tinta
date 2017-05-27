@@ -1,28 +1,53 @@
 {% extends "core/base.html" %}
 {% block content %}
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-  <div class="mdl-card mdl-cell mdl-cell--12-col">
+  <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-card__supporting-text">
-      <h4>Stocks performance</h4>
-    <p>
-     {% for share in shares %}
-       <b>{{ share.symbol }}:</b> {{ share.current_value }} &nbsp;
-     {% endfor %}
-
+      {% for share in shares %}
+      <b>{{ share.symbol }}:</b> {{ share.current_value }} &nbsp;
+      {% endfor %}
+      <b>GOOG:</b> 971.47 &nbsp;
+      <b>AAPL:</b> 153.61 &nbsp;
+      <b>FB:</b> 152.13 &nbsp;
+      <b>GE:</b> 27.45 &nbsp;
+      <b>^ESX:</b> 124.98 &nbsp;
+      <b>^AEX:</b> 528.03 &nbsp;
+      <b>^GSPC:</b> 2415.82 &nbsp;
+      <b>ISP.MI:</b> 2.622 &nbsp;
+      <b>ASML:</b> 134.20 &nbsp;
+      <b>RDSB.L:</b> 2166.50 &nbsp;
+      <b>GBPEUR=X:</b> 1.1444 &nbsp;
+      <b>EURUSD=X:</b> 1.1177 &nbsp;
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__supporting-text">
+      Alex Zelf Beleggen: € 14.027,55
+      <p>
     </div>
   </div>
 </section>
 
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    {% for op in operations %}
+    {% for op, result in operations %}
     <div class="demo-card-square mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title">
-          {{ op.name }}
-        </div>
-        <div class="mdl-card__supporting-text">
-          {{ op.delatils }}
-        </div>
+      <div class="mdl-card__title">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/operation/{{ op.pk }}">{{ op.name }}</a>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <b>Result: <span style="color: {% if result > 0  %}green{% elif result < 0 %}red{% else %}lightgrey{% endif %}">{{ result|default_if_none:"N/A" }}</span> {{ op.currency }}</b>
+        <p>
+        <p>
+        Value: {{ op.value|default_if_none:"N/A" }} {{ op.currency }}
+        <br>
+        Invested: {{ op.invested|default_if_none:"N/A" }} {{ op.currency }}
+        <br>
+        Position: {{ op.position|default_if_none:"N/A" }}
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        {{ op.valuation_date }}
+      </div>
     </div>
     {% endfor %}
 
