@@ -20,5 +20,6 @@ from core import views
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^operation/(?P<operation_id>[0-9]+)/$', views.operation, name='operation'),
     url(r'^admin/', admin.site.urls),
 ]
