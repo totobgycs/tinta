@@ -1,10 +1,19 @@
 {% extends "core/base.html" %}
 {% block content %}
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col">
-    The world... (TODO)
-  </div>
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__supporting-text">
+      <h4>Stocks performance</h4>
+    <p>
+     {% for share in shares %}
+       <b>{{ share.symbol }}:</b> {{ share.current_value }} &nbsp;
+     {% endfor %}
 
+    </div>
+  </div>
+</section>
+
+<div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
     {% for op in operations %}
     <div class="demo-card-square mdl-card mdl-shadow--2dp">
@@ -18,7 +27,7 @@
     {% endfor %}
 
   </div>
-
 </div>
+
 {% endblock %}
 
