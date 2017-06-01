@@ -13,16 +13,18 @@ from .models import MarketData
 
 logger = get_task_logger(__name__)
  
-@periodic_task(run_every=(crontab(hour="*", minute="*", day_of_week="*")))
+@periodic_task(run_every=(crontab(hour="*", minute="0,15,30,45", day_of_week="*")))
 def poll_market_data():
-    logger.info("Start task")
+    logger.info("Start task: update market data")
     now = datetime.now()
     mds = MarketData.objects.all()
     for md in mds:
         yahoo_share = Share(md.symbol)
-        md.price = yahoo_share.get_price()
-        md.poll_time = now
-        md.save()
+        price = yahoo_share.get_price()
+        if price:
+            md.price = price
+            md.poll_time = now
+            md.save()
 
-    logger.info("Task finished")
+    logger.info("Task finished: update market data")
 

@@ -82,6 +82,15 @@ DATABASES = {
 }
 
 
+# Celery
+# You must set this env var before starting the server
+# export RABBITMQ_CONNECTION_STRING='pyamqp://guest:guest@localhost//'
+CELERY_BROKER_URL = os.environ.get(
+    'RABBITMQ_CONNECTION_STRING',
+    'pyamqp://guest:guest@localhost//'
+    )
+CELERY_RESULT_BACKEND = 'rpc://'
+
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 

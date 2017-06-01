@@ -18,3 +18,12 @@ class Operation(models.Model):
     def __str__(self):
         return 'Operation: '+self.name
 
+class MarketData(models.Model):
+    # the ticker symbol (from yahoo finance) 
+    symbol = models.CharField(blank=True, null=True,max_length=10)
+    price = models.FloatField(blank=True, null=True)
+    poll_time = models.DateTimeField(blank=True, null=True)
+    def __str__(self):
+        return 'Market data: '+self.symbol
+
+
