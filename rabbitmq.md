@@ -6,6 +6,9 @@ sudo service rabbitmq-server status
 
 Make sure there is a user (username, pw), which which to connect from the webapp
 
+Set up env var for the connection string (with the real username, pw)
+    export RABBITMQ_CONNECTION_STRING='pyamqp://hanna:pw@localhost//'
+
 Start the worker thread (this is part of the webapp)
 celery -A tinta worker -B -l info
 
