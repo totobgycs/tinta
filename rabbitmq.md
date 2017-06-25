@@ -7,5 +7,5 @@ sudo service rabbitmq-server status
 Make sure there is a user (username, pw), which which to connect from the webapp
 
 Start the worker thread (this is part of the webapp)
-celery -A tinta worker -B -l info
+    celery -A tinta worker -B -l info
 
