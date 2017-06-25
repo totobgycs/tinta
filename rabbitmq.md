@@ -10,5 +10,5 @@ Set up env var for the connection string (with the real username, pw)
     export RABBITMQ_CONNECTION_STRING='pyamqp://hanna:pw@localhost//'
 
 Start the worker thread (this is part of the webapp)
-celery -A tinta worker -B -l info
+    celery -A tinta worker -B -l info
 
