@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load list_index %}
 {% block content %}
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
@@ -7,9 +8,89 @@
         Operation: {{ operation.name }}
       </div>
       <div class="mdl-card__supporting-text">
+        <p>
+        Open position: {{ open_pos }} 
+        </p>
+        <p>
+        Open exposure: {{ open_exposure|floatformat:2 }} {{ operation.currency }}
+        </p>
+        <p>
+        Amount of money in: {{ value_buys|floatformat:2 }} {{ operation.currency }}
+        </p>
+        <p>
+        Amount of money taken out: {{ value_sells|floatformat:2 }} {{ operation.currency }}
+        </p>
+        <p>
+        Profit: {{ realized_profit|floatformat:2 }} {{ operation.currency }}
+        </p>
+
       </div>
     </div>
   </div>
+  
+  <div class="mdl-cell mdl-cell--12-col">
+    All trades in this operation
+    <p>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th>
+            Trade date
+          </th>
+          <th>
+            Instrument
+          </th>
+          <th>
+            Volume
+          </th>
+          <th>
+            Price
+          </th>
+          <th>
+            Amount of money
+          </th>
+          <th>
+            Cumulative position
+          </th>
+          <th>
+            Cumulative invested money
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trade in trades %}
+        <tr>
+          <td>
+            {{ trade.trade_date }}
+          </td>
+          <td>
+            {{ trade.instrument }}
+          </td>
+          <td>
+            {{ trade.volume }}
+          </td>
+          <td>
+            {{ trade.price }}
+          </td>
+          <td>
+            {{ trade.value }}
+          </td>
+          {% with forloop.counter0 as i %}
+          {% with cum_positions|list_index:i as cum_position %}
+          <td>
+            {{ cum_position }}
+          </td>
+          <td>
+            {{ cum_invested|list_index:i|floatformat:2 }}
+          </td>
+          {% endwith %}
+          {% endwith %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
 </div>
 {% endblock %}
 

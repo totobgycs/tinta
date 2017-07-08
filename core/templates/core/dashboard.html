@@ -22,7 +22,7 @@
   </div>
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-card__supporting-text">
-      Alex Zelf Beleggen: € 14.027,55
+      Realized profit: {{ profit|floatformat:2 }}
       <p>
     </div>
   </div>
@@ -30,20 +30,18 @@
 
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    {% for op, result in operations %}
+    {% for op in operations %}
     <div class="demo-card-square mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/operation/{{ op.pk }}">{{ op.name }}</a>
       </div>
       <div class="mdl-card__supporting-text">
-        <b>Result: <span style="color: {% if result > 0  %}green{% elif result < 0 %}red{% else %}lightgrey{% endif %}">{{ result|default_if_none:"N/A" }}</span> {{ op.currency }}</b>
+        <b>Result: {{ op.realized_profit|floatformat:2 }}</b>
         <p>
         <p>
-        Value: {{ op.value|default_if_none:"N/A" }} {{ op.currency }}
+        Invested: {{ op.exposure|floatformat:2 }} {{ op.currency }}
         <br>
-        Invested: {{ op.invested|default_if_none:"N/A" }} {{ op.currency }}
-        <br>
-        Position: {{ op.position|default_if_none:"N/A" }}
+        Position: {{ op.position|floatformat:2 }}
       </div>
       <div class="mdl-card__actions mdl-card--border">
         {{ op.valuation_date }}

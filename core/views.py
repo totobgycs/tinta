@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
-from .models import Operation
+from functools import reduce
 
 from yahoo_finance import Share
 
+from .models import *
+from .services import *
+
 def index(request):
-    template = loader.get_template('core/dashboard.html')
     # the market
     symbols = [
       'GOOG',
@@ -30,18 +32,61 @@ def index(request):
     prices = [{'symbol': s.symbol, 'current_value': s.get_price()} for s in shares]
 
     # our portfolio
-    operations = [
-        (op, round(op.value - op.invested, 2) if (op.value is not None and op.invested is not None) else None) for op in Operation.objects.all()
-    ]
+    operations = Operation.objects.all()
 
-    context = {'operations': operations, 'shares': prices}
+    profit = sum([op.realized_profit for op in operations])
+
+    context = {'operations': operations, 'shares': prices, 'profit': profit}
+    template = loader.get_template('core/dashboard.html')
     return HttpResponse(template.render(context, request))
+
+def operations(request):
+    operations = Operation.objects.all()
+    trades = Trade.objects.all()
+    context = {}
+    template = loader.get_template('core/operations.html')
+    return HttpResponse(template.render(context, request))
+
 
 def operation(request, operation_id):
     try:
         operation = Operation.objects.get(pk=operation_id)
     except Question.DoesNotExist:
         raise Http404("Operation lookup failed.")
+
+    trades = operation.trade_set.order_by('trade_date')
+    buys = trades.filter(openorclose = 'OP')
+    sells = trades.filter(openorclose = 'CL')
+
+    # calculate cumulative position and last 0-pos index, etc
+    cum_positions = [0] * len(trades)
+    cum_invested = [0] * len(trades)
+    curr_pos = 0
+    curr_invested = 0
+    for i, trade in enumerate(trades):
+        curr_pos += trade.volume
+        cum_positions[i] = curr_pos
+        curr_invested += trade.value
+        cum_invested[i] = curr_invested
+         
+    m = OperationMetrics(operation)
+
+    # update the operation
+    operation.realized_profit = m.get('realized_profit')
+    operation.exposure = m.get('open_exposure')
+    operation.position = m.get('open_position')
+    operation.save()
+
+    context = {
+        'operation': operation,
+        'trades': trades,
+        'cum_positions': cum_positions,
+        'cum_invested': cum_invested,
+        'open_pos': m['open_position'],
+        'open_exposure': m['open_exposure'],
+        'value_buys': m['value_buys'],
+        'value_sells': m['value_sells'],
+        'realized_profit': m['realized_profit'],
+    }
     template = loader.get_template('core/operation.html')
-    context = {'operation': operation}
     return HttpResponse(template.render(context, request))

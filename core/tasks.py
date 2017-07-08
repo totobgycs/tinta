@@ -9,7 +9,8 @@ from celery.utils.log import get_task_logger
 
 from yahoo_finance import Share
 
-from .models import MarketData
+from .models import *
+from .services import *
 
 logger = get_task_logger(__name__)
  
@@ -27,4 +28,9 @@ def poll_market_data():
             md.save()
 
     logger.info("Task finished: update market data")
+
+
+@periodic_task(run_every=(crontab(hour="*", minute="0,15,30,45", day_of_week="*")))
+    logger.info("Start task: update operation")
+    logger.info("Task finished: update operation")
 
