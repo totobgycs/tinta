@@ -13,6 +13,10 @@ app = Celery('tinta')
 #   should have a `CELERY_` prefix.
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+@app.task
+def test(arg):
+    print(arg)
+
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 

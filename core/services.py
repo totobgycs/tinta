@@ -4,6 +4,7 @@ from yahoo_finance import Share
 
 from .models import *
 
+
 '''
 Evaluate operation and retun metrics
 
@@ -11,7 +12,7 @@ Reads trades
 Writes operation (some fileds)
 Return some on-the-fly metrics
 '''
-def OperationMetrics(operation):
+def operation_metrics(operation):
     trades = operation.trade_set.order_by('trade_date')
     buys = trades.filter(openorclose = 'OP')
     sells = trades.filter(openorclose = 'CL')

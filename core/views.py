@@ -69,7 +69,7 @@ def operation(request, operation_id):
         curr_invested += trade.value
         cum_invested[i] = curr_invested
          
-    m = OperationMetrics(operation)
+    m = operation_metrics(operation)
 
     context = {
         'operation': operation,

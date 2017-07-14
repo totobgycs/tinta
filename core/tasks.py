@@ -13,8 +13,12 @@ from .models import *
 from .services import *
 
 logger = get_task_logger(__name__)
+
+@shared_task
+def test_mul(x, y):
+    return x * y
  
-@periodic_task(run_every=(crontab(hour="*", minute="0,15,30,45", day_of_week="*")))
+@periodic_task(run_every=(crontab(minute="*/2")))
 def poll_market_data():
     logger.info("Start task: update market data")
     now = datetime.now()
@@ -30,7 +34,11 @@ def poll_market_data():
     logger.info("Task finished: update market data")
 
 
-@periodic_task(run_every=(crontab(hour="*", minute="0,15,30,45", day_of_week="*")))
+@periodic_task(run_every=(crontab(minute="*/2")))
+def update_operation():
     logger.info("Start task: update operation")
+    operations = Operation.objects.all()
+    for operation in operations:
+        operation_metrics(operation)
     logger.info("Task finished: update operation")
 

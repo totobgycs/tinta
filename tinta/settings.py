@@ -93,6 +93,7 @@ CELERY_BROKER_URL = os.environ.get(
     'pyamqp://guest:guest@localhost//'
     )
 CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_IMPORTS = ['core.tasks']
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
