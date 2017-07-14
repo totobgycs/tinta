@@ -14,7 +14,8 @@ OPENORCLOSE_CHOICES = (
 )
 
 class Operation(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(
+        max_length=200)
     # currency of the operation, by default: EUR
     currency = models.CharField(
         blank=True, null=True, max_length=3,
@@ -22,21 +23,19 @@ class Operation(models.Model):
         choices=CURRENCY_CHOICES)
     is_active = models.BooleanField(default=True)
     # Open exposure (money currently at risk)
-    exposure = models.FloatField(blank=True, null=True)
+    exposure_value = models.FloatField(
+        blank=True, null=True,
+        help_text="The amount of money we can lose.")
     # Open position
-    position = models.FloatField(blank=True, null=True)
+    position = models.FloatField(
+        blank=True, null=True,
+        help_text="Open position ... counting since the last time we had a 0 position."
+    )
     # Profit (realized, at last flat position)
-    realized_profit = models.FloatField(blank=True, null=True)
-    
-    # TODO: redo this model (some fileds belong to trades)
-    # value = volume * price
-    value = models.FloatField(blank=True, null=True)
-    # 
-    position = models.FloatField(blank=True, null=True)
-    price = models.FloatField(blank=True, null=True)
-    valuation_date = models.DateField(blank=True, null=True)
-    # the buys - the sells ... what about the expires?
-    invested = models.FloatField(blank=True, null=True)
+    realized_profit = models.FloatField(
+        blank=True, null=True,
+        help_text="... calculated at the last time we had a 0 position."
+    )
     
     # the ticker symbol (from yahoo finance) 
     underlying = models.CharField(blank=True, null=True,max_length=10)
@@ -83,7 +82,6 @@ class Trade(models.Model):
     price = models.FloatField(
         blank=True, null=True,
         help_text="The price of the unit (value = volume * price + transaction cost)")
-    )
     operation = models.ForeignKey(Operation, blank=True, null=True)
     def __str__(self):
         return "Trade: [{3}] {0} {1} for {4} {2}".format(

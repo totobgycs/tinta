@@ -4,6 +4,13 @@ from yahoo_finance import Share
 
 from .models import *
 
+'''
+Evaluate operation and retun metrics
+
+Reads trades
+Writes operation (some fileds)
+Return some on-the-fly metrics
+'''
 def OperationMetrics(operation):
     trades = operation.trade_set.order_by('trade_date')
     buys = trades.filter(openorclose = 'OP')
@@ -33,6 +40,12 @@ def OperationMetrics(operation):
 
     # exposure (only from the last closed position)
     open_exposure = reduce(lambda x, y: x+y, [t.value for t in trades[flat_index+1:]], 0)
+
+    # update the operation
+    operation.realized_profit = realized_profit
+    operation.exposure_value = open_exposure
+    operation.position = open_pos
+    operation.save()
 
     context = {
         'open_position': open_pos,

@@ -32,7 +32,7 @@ def index(request):
     prices = [{'symbol': s.symbol, 'current_value': s.get_price()} for s in shares]
 
     # our portfolio
-    operations = Operation.objects.all()
+    operations = Operation.objects.order_by('-position')
 
     profit = sum([op.realized_profit for op in operations])
 
@@ -70,12 +70,6 @@ def operation(request, operation_id):
         cum_invested[i] = curr_invested
          
     m = OperationMetrics(operation)
-
-    # update the operation
-    operation.realized_profit = m.get('realized_profit')
-    operation.exposure = m.get('open_exposure')
-    operation.position = m.get('open_position')
-    operation.save()
 
     context = {
         'operation': operation,

@@ -36,12 +36,12 @@
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/operation/{{ op.pk }}">{{ op.name }}</a>
       </div>
       <div class="mdl-card__supporting-text">
-        <b>Result: {{ op.realized_profit|floatformat:2 }}</b>
+        <b>Relaized profit: {{ op.realized_profit|floatformat:2 }}</b>
         <p>
         <p>
-        Invested: {{ op.exposure|floatformat:2 }} {{ op.currency }}
+        Exposure value: {{ op.exposure_value|floatformat:2 }} {{ op.currency }}
         <br>
-        Position: {{ op.position|floatformat:2 }}
+        Open position: {{ op.position|floatformat:2 }}
       </div>
       <div class="mdl-card__actions mdl-card--border">
         {{ op.valuation_date }}
