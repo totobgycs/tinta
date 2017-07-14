@@ -66,7 +66,7 @@ class Trade(models.Model):
     # how much money did we pay/get in this trade
     value = models.FloatField(
         blank=True, null=True,
-        help_text="How much money did we pay in this trade (+ if we payed, - if we got the money)")
+        help_text="How much money did we pay in this trade, including costs (+ if we payed, - if we got the money)")
     # was this opening or closing a position
     openorclose = models.CharField(
         blank=True, null=True, max_length=2,
@@ -75,14 +75,15 @@ class Trade(models.Model):
         help_text="Position opening or position closing")
     # instrument: what did we buy/sell
     instrument = models.CharField(blank=True, null=True, max_length=100)
-    # the ticker symbol (from yahoo finance) 
-    underlying = models.CharField(blank=True, null=True, max_length=10)
     # how many unit
     volume = models.FloatField(
         blank=True, null=True,
         help_text="Usually integer number of units (+ if we bought, - if we sold)")
     # unit price
-    price = models.FloatField(blank=True, null=True)
+    price = models.FloatField(
+        blank=True, null=True,
+        help_text="The price of the unit (value = volume * price + transaction cost)")
+    )
     operation = models.ForeignKey(Operation, blank=True, null=True)
     def __str__(self):
         return "Trade: [{3}] {0} {1} for {4} {2}".format(
