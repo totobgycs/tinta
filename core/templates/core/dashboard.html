@@ -3,26 +3,12 @@
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-card__supporting-text">
-      {% for share in shares %}
-      <b>{{ share.symbol }}:</b> {{ share.current_value }} &nbsp;
-      {% endfor %}
-      <b>GOOG:</b> 971.47 &nbsp;
-      <b>AAPL:</b> 153.61 &nbsp;
-      <b>FB:</b> 152.13 &nbsp;
-      <b>GE:</b> 27.45 &nbsp;
-      <b>^ESX:</b> 124.98 &nbsp;
-      <b>^AEX:</b> 528.03 &nbsp;
-      <b>^GSPC:</b> 2415.82 &nbsp;
-      <b>ISP.MI:</b> 2.622 &nbsp;
-      <b>ASML:</b> 134.20 &nbsp;
-      <b>RDSB.L:</b> 2166.50 &nbsp;
-      <b>GBPEUR=X:</b> 1.1444 &nbsp;
-      <b>EURUSD=X:</b> 1.1177 &nbsp;
-    </div>
-  </div>
-  <div class="mdl-cell mdl-cell--12-col">
-    <div class="mdl-card__supporting-text">
+      <p>
+      <b>Our portfolio</b>
+      </p>
       Realized profit: {{ profit|floatformat:2 }}
+      <p>
+      Exposure: {{ exposure|floatformat:2 }}
       <p>
     </div>
   </div>
@@ -51,6 +37,19 @@
 
   </div>
 </div>
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__supporting-text">
+      <p>
+      <b>The market</b>
+      </p>
+      {% for share in shares %}
+      <b>{{ share.symbol }}:</b> {{ share.current_value }} &nbsp;
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
 {% endblock %}
 

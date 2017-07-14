@@ -12,31 +12,21 @@ from .services import *
 
 def index(request):
     # the market
-    symbols = [
-      'GOOG',
-      'AAPL',
-      'FB',
-      'GE',
-      '^ESX',
-      '^AEX',
-      '^GSPC',
-      'ISP.MI',
-      'ASML',
-      'RDSB.L',
-      'GBPEUR=X',
-      'EURUSD=X',
-    ]
-    # TODO: this is temporary
-    symbols = []
-    shares = [Share(sb) for sb in symbols]
-    prices = [{'symbol': s.symbol, 'current_value': s.get_price()} for s in shares]
-
+    mds = MarketData.objects.all()
+    prices = [{'symbol': md.symbol, 'current_value': md.price} for md in mds]
+    
     # our portfolio
-    operations = Operation.objects.order_by('-position')
+    operations = Operation.objects.order_by('-exposure_value')
 
     profit = sum([op.realized_profit for op in operations])
+    exposure = sum([op.exposure_value for op in operations])
 
-    context = {'operations': operations, 'shares': prices, 'profit': profit}
+    context = {
+        'operations': operations,
+        'shares': prices,
+        'profit': profit,
+        'exposure': exposure,
+    }
     template = loader.get_template('core/dashboard.html')
     return HttpResponse(template.render(context, request))
 
