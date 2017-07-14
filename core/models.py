@@ -90,6 +90,6 @@ class Trade(models.Model):
             self.volume)
 
     class Meta:
-        ordering = ['trade_date']
+        ordering = ['-trade_date']
 
 
