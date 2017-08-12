@@ -1,2 +1,2 @@
-web: gunicorn prandius.wsgi --log-file -
+web: gunicorn tinta.wsgi --log-file -
 
