@@ -1,3 +1,5 @@
 django
 celery
+gunicorn
 yahoo_finance
+
