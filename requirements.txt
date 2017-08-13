@@ -3,4 +3,5 @@ celery
 gunicorn
 yahoo_finance
 dj-database-url
+psycopg2
 
