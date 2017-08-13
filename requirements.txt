@@ -2,4 +2,5 @@ django
 celery
 gunicorn
 yahoo_finance
+dj-database-url
 
