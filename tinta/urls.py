@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^operations/', views.operations, name="operations"),
     url(r'^operation/(?P<operation_id>[0-9]+)/$', views.operation, name='operation'),
+    url(r'^accounts/login/', admin.site.urls),
     url(r'^admin/', admin.site.urls),
 ]

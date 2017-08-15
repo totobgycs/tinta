@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -10,6 +12,7 @@ from yahoo_finance import Share
 from .models import *
 from .services import *
 
+@login_required
 def index(request):
     # the market
     mds = MarketData.objects.all()
@@ -30,6 +33,8 @@ def index(request):
     template = loader.get_template('core/dashboard.html')
     return HttpResponse(template.render(context, request))
 
+
+@login_required
 def operations(request):
     operations = Operation.objects.all()
     trades = Trade.objects.all()
@@ -38,6 +43,7 @@ def operations(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def operation(request, operation_id):
     try:
         operation = Operation.objects.get(pk=operation_id)
