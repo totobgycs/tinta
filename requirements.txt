@@ -4,4 +4,5 @@ gunicorn
 yahoo_finance
 dj-database-url
 psycopg2
+whitenoise
 
