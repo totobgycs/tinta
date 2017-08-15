@@ -88,8 +88,8 @@ DATABASES = {
     }
 }
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
-
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default'] = dj_database_url.config(default='sqlite:///'+os.path.join(BASE_DIR, 'db.sqlite3'))
 
 # Celery
 # You must set this env var before starting the server
