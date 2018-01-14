@@ -82,7 +82,7 @@ class Trade(models.Model):
     price = models.FloatField(
         blank=True, null=True,
         help_text="The price of the unit (value = volume * price + transaction cost)")
-    operation = models.ForeignKey(Operation, blank=True, null=True)
+    operation = models.ForeignKey(Operation, blank=True, null=True, on_delete=models.SET_NULL)
     def __str__(self):
         return "Trade: [{3}] {0} {1} for {4} {2}".format(
             self.value, self.currency, self.instrument, self.trade_date,
