@@ -1,5 +1,5 @@
 # Tinta
-This project is for...
+This project is for Turbo Tigris
 
 # Setup
 Pre-requisites: git, python3, rabbitmq installed system-wide
