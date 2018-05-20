@@ -2,7 +2,7 @@
 This project is for Turbo Tigris
 
 # Setup
-Pre-requisites: git, python3, rabbitmq installed system-wide
+Pre-requisites: git, python3, python-virtualenv, rabbitmq installed system-wide
 
 Steps:
 
